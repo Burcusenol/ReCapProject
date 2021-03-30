@@ -76,9 +76,6 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.ModelYear = car.ModelYear;
         }
 
-        Car IEntityRepository<Car>.GetById(int entityId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

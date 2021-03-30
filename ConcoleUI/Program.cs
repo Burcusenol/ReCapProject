@@ -13,24 +13,28 @@ namespace ConcoleUI
             //CarTest();
             //BrandTest();
             //ColorTest();
-            //GetById();
             CarDetails();
         }
 
-        private static void GetById()
-        {
-            Console.WriteLine(new ColorManager(new EfColorDal()).GetById(3).ColorName);
-            Console.WriteLine(new CarManager(new EfCarDal()).GetById(1).DailyPrice);
-            Console.WriteLine(new BrandManager(new EfBrandDal()).GetById(4).BrandName);
-        }
 
         private static void CarDetails()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetails())
+
+            var result = carManager.GetCarDetails();
+            
+            if(result.Success==true)
             {
-                Console.WriteLine("Car : " + car.CarName + " -- Price : " + car.DailyPrice + " -- Brand Name : " + car.BrandName + " -- Color Name : " + car.ColorName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("Car : " + car.CarName + " -- Price : " + car.DailyPrice + " -- Brand Name : " + car.BrandName + " -- Color Name : " + car.ColorName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            Console.ReadLine();
         }
 
         private static void ColorTest()
@@ -44,10 +48,20 @@ namespace ConcoleUI
             Console.WriteLine("Color deleted.");
 
             Console.WriteLine("---List of Color---");
-            foreach (var color in colorManager.GetAll())
+
+            var result = colorManager.GetAll();
+            if(result.Success==true)
             {
-                Console.WriteLine(color.ColorName);
+                foreach (var color in result.Data)
+                {
+                    Console.WriteLine(color.ColorName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            Console.ReadLine();
         }
 
         private static void BrandTest()
@@ -62,10 +76,20 @@ namespace ConcoleUI
             Console.WriteLine("Brand deleted.");
 
             Console.WriteLine("---List of Brand---");
-            foreach (var brand in brandManager.GetAll())
+
+            var result = brandManager.GetAll();
+            if (result.Success == true)
             {
-                Console.WriteLine(brand.BrandName);
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.BrandName);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            Console.ReadLine();
         }
 
         private static void CarTest()
@@ -80,10 +104,20 @@ namespace ConcoleUI
 
             Console.WriteLine("---List of Car---");
 
-            foreach (var car in carManager.GetAll())
+            var result = carManager.GetAll();
+            if (result.Success == true)
             {
-                Console.WriteLine("Car : " + car.Description + " -- Price : " + car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("Car : " + car.Description + " -- Price : " + car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            Console.ReadLine();
+            
         }
     }
 }
