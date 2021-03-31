@@ -13,9 +13,22 @@ namespace ConcoleUI
             //CarTest();
             //BrandTest();
             //ColorTest();
-            CarDetails();
+            //CarDetails();
+            //RentalDetails();
+
+
+            CustomerTest();
         }
 
+        private static void CustomerTest()
+        {
+
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            customerManager.Insert(new Customer { CustomerId = 1, UserId = 2, CompanyName = "A Şirketi", FirstName="Ayşe", LastName="Ay", Email="ayseay@gmail.com", Id=1, Password="123456789"});
+            customerManager.Insert(new Customer { CustomerId = 2, UserId = 1, CompanyName = "B Şirketi", FirstName="Ali", LastName="Veli", Email="aliveli@gmail.com", Password="987654321", Id=2});
+
+           
+        } 
 
         private static void CarDetails()
         {
@@ -28,6 +41,26 @@ namespace ConcoleUI
                 foreach (var car in result.Data)
                 {
                     Console.WriteLine("Car : " + car.CarName + " -- Price : " + car.DailyPrice + " -- Brand Name : " + car.BrandName + " -- Color Name : " + car.ColorName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            Console.ReadLine();
+        }
+
+        private static void RentalDetails()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            var result = rentalManager.GetRentalDetails();
+
+            if (result.Success == true)
+            {
+                foreach (var rental in result.Data)
+                {
+                    Console.WriteLine("Car : " + rental.ModelName + " -- Brand Name: " + rental.BrandName + " -- Color Name : " + rental.ColorName + " -- First Name : " + rental.FirstName);
                 }
             }
             else
