@@ -15,19 +15,56 @@ namespace ConcoleUI
             //ColorTest();
             //CarDetails();
             //RentalDetails();
+            //RentalTest();
+            //CustomerTest();
 
+        }
 
-            CustomerTest();
+        
+
+        private static void RentalTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.Insert(new Rental { CarId = 1, CustomerId = 3, RentDate = DateTime.Today, ReturnDate = DateTime.MaxValue });
+
+            var result = rentalManager.GetAll();
+            if (result.Success == true)
+            {
+                foreach (var rental in result.Data)
+                {
+                    Console.WriteLine(rental.CarId);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            Console.ReadLine();
         }
 
         private static void CustomerTest()
         {
 
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            customerManager.Insert(new Customer { CustomerId = 1, UserId = 2, CompanyName = "A Şirketi", FirstName="Ayşe", LastName="Ay", Email="ayseay@gmail.com", Id=1, Password="123456789"});
-            customerManager.Insert(new Customer { CustomerId = 2, UserId = 1, CompanyName = "B Şirketi", FirstName="Ali", LastName="Veli", Email="aliveli@gmail.com", Password="987654321", Id=2});
+            customerManager.Insert(new Customer {  CompanyName="B Şirketi",UserId=2 });
 
-           
+
+            var result = customerManager.GetAll();
+            if (result.Success == true)
+            {
+                foreach (var customer in result.Data)
+                {
+                    Console.WriteLine(customer.CompanyName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            Console.ReadLine();
+
+            
+            //  FirstName = "Ali", LastName = "Veli", Email = "aliveli@gmail.com", Password = "987654321", Id = 2
         } 
 
         private static void CarDetails()
@@ -60,7 +97,7 @@ namespace ConcoleUI
             {
                 foreach (var rental in result.Data)
                 {
-                    Console.WriteLine("Car : " + rental.ModelName + " -- Brand Name: " + rental.BrandName + " -- Color Name : " + rental.ColorName + " -- First Name : " + rental.FirstName);
+                    Console.WriteLine("Car : " + rental.ModelName + " -- Brand Name: " + rental.BrandName + " -- Color Name : " + rental.ColorName + " -- Rent Date : " + rental.RentDate);
                 }
             }
             else

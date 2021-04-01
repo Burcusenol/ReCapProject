@@ -32,11 +32,11 @@ namespace Business.Concrete
 
         public IResult Insert(Customer customer)
         {
-            var result = _customerDal.GetAll(c => c.CustomerId == customer.CustomerId).Any();
-            if(result)
-            {
-                return new ErrorResult(Messages.CustomerIdAlreadyExists);
-            }
+            //var result = _customerDal.GetAll(c => c.CustomerId == customer.CustomerId).Any();
+            //if (result)
+            //{
+            //    return new ErrorResult(Messages.CustomerIdAlreadyExists);
+            //}
             _customerDal.Insert(customer);
             return new SuccessResult(Messages.CustomerAdded);
         }

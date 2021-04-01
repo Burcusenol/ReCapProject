@@ -16,38 +16,36 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarDbContext context = new CarDbContext())
             {
-                var result = from r in context.Rentals
-                             join cu in context.Customers
-                             on r.CustomerId equals cu.CustomerId
-                             join car in context.Cars
-                             on r.CarId equals car.Id
+
+                var result = from c in context.Cars
                              join b in context.Brands
-                             on car.BrandId equals b.BrandId
-                             join color in context.Colors
-                             on car.ColorId equals color.ColorId
-                             join u in context.Users
-                             on cu.UserId equals u.Id
+                             on c.Id equals b.BrandId
+                             join co in context.Colors
+                             on c.ColorId equals co.ColorId
+                             join r in context.Rentals
+                             on c.Id equals r.CarId
+                            
                              select new RentalDetailDto
                              {
-                                 RentalId = r.Id,
-                                 CustomerId = cu.CustomerId,
-                                 FirstName = u.FirstName,
-                                 LastName = u.LastName,
-                                 CarId = car.Id,
+                                 ModelName = c.ModelName,
                                  BrandName = b.BrandName,
-                                 ModelName = car.ModelName,
-                                 ColorName = color.ColorName,
+                                 ColorName = co.ColorName,
                                  RentDate = r.RentDate,
-                                 ReturnDate = r.ReturnDate
-                             };
+                                 DailyPrice = c.DailyPrice
 
-                        return result.ToList();
+                             };
+                return result.ToList();
+
+
+
+
+
             }
 
 
 
 
-            
+
         }
 
     }
