@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -30,13 +32,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerListed);
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Insert(Customer customer)
         {
-            //var result = _customerDal.GetAll(c => c.CustomerId == customer.CustomerId).Any();
-            //if (result)
-            //{
-            //    return new ErrorResult(Messages.CustomerIdAlreadyExists);
-            //}
+           
             _customerDal.Insert(customer);
             return new SuccessResult(Messages.CustomerAdded);
         }
