@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -42,7 +43,12 @@ namespace Business.Constants
         public static string RentalUpdated = "Rental updated.";
         public static string RentalDeleted = "Rental deleted.";
         public static string RentalNotAvailable = "Car is not avaliable for rent.";
-       
-
+        
+        public static string CarImageLımıted=" Car image can be the most 5.";
+        public static string CarImageAdded = "Car image added.";
+        public static string CarImageListed = "Car image listed..";
+        public static string CarImageUpdated = "Car image updated.";
+        public static string CarImageDeleted = "Car image deleted.";
+        public static string CheckIfAnyCarImageExists=" Car image already registered!";
     }
 }
