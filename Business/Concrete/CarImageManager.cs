@@ -35,7 +35,7 @@ namespace Business.Concrete
             {
                 return result;
             }
-            FileHelper.Delete(_carImageDal.Get(p => p.CarImageId == carImage.CarImageId).ImagePath);
+            
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
         }
