@@ -40,6 +40,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageDeleted);
         }
 
+        public IDataResult<CarImage> Get(int id)
+        {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.CarImageId == id));
+        }
+
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(),Messages.CarListed);
