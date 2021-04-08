@@ -30,12 +30,12 @@ namespace Business.Concrete
             var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) 
                 + _carImageDal.Get(p => p.CarImageId == carImage.CarImageId).ImagePath;
 
-            IResult result = BusinessRules.Run(FileHelper.DeleteAsync(oldpath));
+            IResult result = BusinessRules.Run(FileHelper.Delete(oldpath));
             if(result!=null)
             {
                 return result;
             }
-
+            FileHelper.Delete(_carImageDal.Get(p => p.CarImageId == carImage.CarImageId).ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
         }
@@ -62,7 +62,7 @@ namespace Business.Concrete
         }
 
        [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Insert(CarImage carImage, IFormFile fromFile)
+        public IResult Insert(IFormFile file,CarImage carImage)
         {
 
             IResult result = BusinessRules.Run(CheckCarImageLımıted(carImage.CarId));
@@ -71,18 +71,19 @@ namespace Business.Concrete
                 return result;
             }
 
-            carImage.ImagePath = FileHelper.AddAsync(fromFile);
+            carImage.ImagePath = FileHelper.Add(file);
             carImage.CreationDate = DateTime.Now;
             _carImageDal.Insert(carImage);
             return new SuccessResult(Messages.CarImageAdded);
         }
 
-        public IResult Update(CarImage carImage, IFormFile fromFile)
+      
+        public IResult Update(IFormFile file,CarImage carImage)
         {
             var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) 
-                + _carImageDal.Get(p => p.CarId == carImage.CarId).ImagePath;
+                + _carImageDal.Get(p => p.CarImageId== carImage.CarImageId).ImagePath;
 
-            carImage.ImagePath = FileHelper.UpdateAsync(oldPath, fromFile);
+            carImage.ImagePath = FileHelper.Update(oldPath,file);
             carImage.CreationDate = DateTime.Now;
             _carImageDal.Update(carImage);
             return new SuccessResult(Messages.CarImageUpdated);
@@ -100,7 +101,7 @@ namespace Business.Concrete
 
         private IDataResult<List<CarImage>> CheckIfAnyCarImageExists(int carId)
         {
-            string path = @"\CarImages\DefaultCarImage.jpg";
+            string path = @"\Images\DefaultCarImage.jpg";
             var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
 
             if (result)

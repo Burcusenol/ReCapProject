@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbycarid")]
         public IActionResult GetByCarId(int carId)
         {
-            var result = _carImageService.GetById(carId);
+            var result = _carImageService.GetByCarId(carId);
             if (result.Success)
             {
                 return Ok(result);
@@ -54,9 +54,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("insert")]
-        public IActionResult Insert([FromForm(Name = ("Image"))] IFormFile fromfile, [FromForm] CarImage carImage)
+        public IActionResult Insert([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
         {
-            var result = _carImageService.Insert(carImage,fromfile);
+            var result = _carImageService.Insert(file,carImage);
             if (result.Success)
             {
                 return Ok(result);
@@ -66,11 +66,11 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile fromfile, [FromForm(Name=("Id"))] int id)
+        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm(Name=("Id"))] int Id)
         {
 
-            var carImage = _carImageService.GetById(id).Data;
-            var result = _carImageService.Update(carImage,fromfile);
+            var carImage = _carImageService.GetById(Id).Data;
+            var result = _carImageService.Update(file,carImage);
             if (result.Success)
             {
                 return Ok(result);
@@ -80,10 +80,10 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("delete")]
-        public IActionResult Delete([FromForm(Name=("Id"))] int id)
+        public IActionResult Delete([FromForm(Name=("Id"))] int Id)
         {
-            var carImage = _carImageService.GetById(id).Data;
-            var result = _carImageService.Delete(carImage);
+            var forDelete = _carImageService.GetById(Id).Data;
+            var result = _carImageService.Delete(forDelete);
             if (result.Success)
             {
                 return Ok(result);
