@@ -1,6 +1,8 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -50,5 +52,14 @@ namespace Business.Constants
         public static string CarImageUpdated = "Car image updated.";
         public static string CarImageDeleted = "Car image deleted.";
         public static string CheckIfAnyCarImageExists=" Car image already registered!";
+       
+        
+        public static string AuthorizationDenied="You are not authorized.";
+        public static string UserRegistered="User registered";
+        public static string UserNotFound="User not found.";
+        public static string PasswordError="PasswordError";
+        public static string SuccessfulLogin="Login is succesful.";
+        public static string UserAlreadyExists="User already Exists";
+        public static string AccessTokenCreated="Access token created.";
     }
 }
