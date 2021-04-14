@@ -26,14 +26,27 @@ namespace Business.Concrete
             return _userDal.GetClaims(user);
         }
 
-        public void Insert(User user)
+        public IResult Insert(User user)
         {
             _userDal.Insert(user);
+            return new SuccessResult(Messages.UserAdded);
         }
 
         public User GetByMail(string email)
         {
             return _userDal.Get(u => u.Email == email);
+        }
+
+        public IResult Update(User user)
+        {
+            _userDal.Update(user);
+            return new SuccessResult(Messages.UserUpdated);
+        }
+
+        public IResult Delete(User user)
+        {
+            _userDal.Delete(user);
+            return new SuccessResult(Messages.UserDeleted);
         }
     }
 
